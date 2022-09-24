@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/color"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Switch
+            android:id="@+id/manualAutoToggleBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:paddingRight="150dp"
+            android:switchPadding="-220dp"
+            android:text="MANUAL"
+            android:textAlignment="center"
+            android:textOff="@string/manual"
+            android:textOn="@string/auto"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.54"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+        android:id="@+id/exploredImageBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_corner_palette01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateButton"
+        app:srcCompat="@drawable/ic_check" />
+
+        <ImageButton
+            android:id="@+id/northFaceObs"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_corner"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/southFaceObs"
+            app:layout_constraintHorizontal_bias="0.736"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/obstacleImageBtn"
+            app:srcCompat="@drawable/ic_forward" />
+
+        <ImageButton
+            android:id="@+id/westFaceObs"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_corner"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/northFaceObs"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_left" />
+
+        <ImageButton
+            android:id="@+id/eastFaceObs"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="384dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/rounded_corner"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/obstacleImageBtn"
+            app:layout_constraintVertical_bias="0.517"
+            app:srcCompat="@drawable/ic_right" />
+
+        <ImageButton
+            android:id="@+id/southFaceObs"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_corner"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/eastFaceObs"
+            app:layout_constraintHorizontal_bias="0.925"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/obstacleImageBtn"
+            app:layout_constraintVertical_bias="0.473"
+            app:srcCompat="@drawable/ic_reverse" />
+
+        <ImageButton
+            android:id="@+id/obstacleImageBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@+id/exploredImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/updateButton"
+            app:srcCompat="@drawable/ic_arrow_error" />
+
+
+        <ImageButton
+            android:id="@+id/clearImageBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/obstacleImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/updateButton"
+            app:srcCompat="@drawable/ic_clear" />
+
+        <ToggleButton
+        android:id="@+id/setStartPointToggleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textOff="SET STARTPOINT"
+        android:textOn="CANCEL"
+        android:textSize="18sp"
+            android:background="@drawable/rounded_corner_palette02"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resetMapBtn" />
+
+    <ToggleButton
+        android:id="@+id/setWaypointToggleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="28dp"
+        android:textAlignment="center"
+        android:textOff="SET WAYPOINT"
+        android:textOn="CANCEL"
+        android:textSize="18sp"
+        android:background="@drawable/rounded_corner_palette02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.982"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setStartPointToggleBtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/resetMapBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="RESET MAP"
+        android:background="@drawable/rounded_corner_palette01"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.985"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="UPDATE"
+        android:background="@drawable/rounded_corner_palette01"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

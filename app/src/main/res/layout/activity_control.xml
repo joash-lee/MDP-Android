@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/color"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- make left n right button invis for now-->
+
+
+        <Button
+            android:id="@+id/calibrateButton"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="60dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:clickable="true"
+            android:text="Update Pos"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.015"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backwardRightImageBtn" />
+
+        <Switch
+            android:id="@+id/phoneTiltSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="488dp"
+            android:splitTrack="false"
+            android:text="TILT OFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backwardLeftImageBtn" />
+
+        <ImageButton
+            android:id="@+id/stopImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forwardImageBtn"
+            app:srcCompat="@drawable/ic_stop" />
+
+        <ImageButton
+            android:id="@+id/rightImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="384dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.09"
+            app:layout_constraintStart_toEndOf="@+id/stopImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/forwardRightImageBtn"
+            app:srcCompat="@drawable/ic_arrow_move_right" />
+
+        <ImageButton
+            android:id="@+id/forwardLeftImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintEnd_toStartOf="@+id/forwardImageBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_move_forward_left" />
+
+        <ImageButton
+            android:id="@+id/forwardImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="160dp"
+            android:layout_marginEnd="302dp"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_move_forward" />
+
+        <ImageButton
+            android:id="@+id/leftImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="22dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@+id/stopImageBtn"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forwardLeftImageBtn"
+            app:srcCompat="@drawable/ic_arrow_move_left" />
+
+        <ImageButton
+            android:id="@+id/backImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stopImageBtn"
+            app:layout_constraintVertical_bias="0.1"
+            app:srcCompat="@drawable/ic_arrow_move_backward" />
+
+        <ImageButton
+            android:id="@+id/forwardRightImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="160dp"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintStart_toEndOf="@+id/forwardImageBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_move_forward_right" />
+
+        <ImageButton
+            android:id="@+id/backwardLeftImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintEnd_toStartOf="@+id/backImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/leftImageBtn"
+            app:srcCompat="@drawable/ic_arrow_move_backward_left" />
+
+        <ImageButton
+            android:id="@+id/backwardRightImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.04"
+            app:layout_constraintStart_toEndOf="@+id/backImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/rightImageBtn"
+            app:layout_constraintVertical_bias="0.1"
+            app:srcCompat="@drawable/ic_arrow_move_backward_right" />
+
+        <ImageButton
+            android:id="@+id/exploreResetImageBtn"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.916"
+            app:layout_constraintStart_toStartOf="@+id/fastestTimeTextView"
+            app:layout_constraintTop_toBottomOf="@+id/exploreTimeTextView"
+            app:srcCompat="@drawable/ic_refresh" />
+
+        <ToggleButton
+            android:id="@+id/exploreToggleBtn"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:text="Exploration"
+            android:textOff="EXPLORE"
+            android:textOn="STOP"
+            app:layout_constraintStart_toStartOf="@+id/exploreTimeTextView"
+            app:layout_constraintTop_toBottomOf="@+id/exploreTimeTextView" />
+
+        <TextView
+            android:id="@+id/exploreTextView"
+            android:layout_width="172dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="164dp"
+            android:background="@drawable/rounded_corner_palette02"
+            android:gravity="center"
+            android:text="Exploration(t)"
+            android:textColor="@color/colorAccentDark"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/fastestTextView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/rightImageBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/fastestTimeTextView"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="92dp"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:text="00:00"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toTopOf="@+id/fastestResetImageBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fastestTextView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ToggleButton
+            android:id="@+id/fastestToggleBtn"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="148dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:text="FASTEST"
+            android:textOff="FASTEST"
+            android:textOn="STOP"
+            app:layout_constraintStart_toStartOf="@+id/exploreTimeTextView"
+            app:layout_constraintTop_toBottomOf="@+id/exploreToggleBtn" />
+
+        <TextView
+            android:id="@+id/exploreTimeTextView"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:text="00:00"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toStartOf="@+id/fastestTimeTextView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/rightImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/exploreTextView" />
+
+        <TextView
+            android:id="@+id/fastestTextView"
+            android:layout_width="157dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="164dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rounded_corner_palette02"
+            android:gravity="center"
+            android:text="Fastest P(t)"
+            android:textColor="@color/colorAccentDark"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/fastestResetImageBtn"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_corner_palette01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.92"
+            app:layout_constraintStart_toStartOf="@+id/fastestTimeTextView"
+            app:layout_constraintTop_toBottomOf="@+id/exploreResetImageBtn"
+            app:srcCompat="@drawable/ic_refresh" />
+
+
+        <TextView
+            android:id="@+id/txtViewSbDistance"
+            android:layout_width="154dp"
+            android:layout_height="27dp"
+            android:layout_below="@+id/sbDistance"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/rounded_corner_palette02"
+            android:text="0"
+            android:textColor="@color/colorAccentDark"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRotation" />
+
+        <SeekBar
+            android:id="@+id/sbDistance"
+            android:layout_width="398dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:background="#FF9531"
+            android:max="17"
+            android:progress="0"
+            android:theme="@style/Widget.AppCompat.SeekBar.Discrete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewSbDistance" />
+
+        <Button
+            android:id="@+id/takePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="412dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_corner_palette01"
+            android:text="TAKEPIC|"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fastestToggleBtn" />
+
+        <SeekBar
+            android:id="@+id/sbRotation"
+            android:layout_width="574dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:background="#FF9531"
+            android:max="360"
+            android:min="0"
+            android:progress="90"
+            android:theme="@style/Widget.AppCompat.SeekBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRotation" />
+
+        <TextView
+            android:id="@+id/tvRotation"
+            android:layout_width="154dp"
+            android:layout_height="32dp"
+            android:background="@drawable/rounded_corner_palette02"
+            android:text="90"
+            android:textColor="@color/colorAccentDark"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.008"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

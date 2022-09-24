@@ -1,0 +1,10 @@
+Lowerest Cost:
+From Start to All 5 points
+From Point 1 to Point 2-5
+From Point 2 to Point 3-5
+...
+From Point 4 to Point 5
+
+---
+Hamilitlian Path: Shortest Cost
+Run
