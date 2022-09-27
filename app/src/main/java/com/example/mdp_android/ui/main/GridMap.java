@@ -39,6 +39,7 @@ public class GridMap extends View {
     private static String Direction;
     private static int rid;
     private static int Directioncount;
+    public static String message = "";
 
 
 
@@ -1216,7 +1217,9 @@ public class GridMap extends View {
                 foundbit = "Found";
             }
 
-            MainActivity.printMessage("obstacle" + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0]) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1]) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2]) + " "+foundbit+")");
+            message = message + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0].trim()) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1].trim()) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2].trim()) +")";
+            Toast.makeText(getContext().getApplicationContext(),message,Toast.LENGTH_LONG);
+            //MainActivity.printMessage("obstacle" + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0]) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1]) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2]) + " "+foundbit+")");
             this.printObstacleAdded=false;
         }
     }

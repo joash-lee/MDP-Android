@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.mdp_android.MainActivity;
 import com.example.mdp_android.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,6 +39,7 @@ public class CommsFragment extends Fragment {
     FloatingActionButton send;
     private static TextView messageReceivedtv;
     private EditText typeBoxEditText;
+    private FloatingActionButton bluetoothsend;
 
     public static CommsFragment newInstance(int index) {
         CommsFragment fragment = new CommsFragment();
@@ -66,7 +69,7 @@ public class CommsFragment extends Fragment {
         View root = inflater.inflate(R.layout.activity_comms, container, false);
 
         send = (FloatingActionButton) root.findViewById(R.id.messageButton);
-
+        bluetoothsend =(FloatingActionButton) root.findViewById(R.id.messagebluetooth);
         // Message Box
         messageReceivedtv = (TextView) root.findViewById(R.id.messageReceivedTextView);
         messageReceivedtv.setMovementMethod(new ScrollingMovementMethod());
@@ -93,6 +96,14 @@ public class CommsFragment extends Fragment {
                     BluetoothConnectionService.write(bytes);
                 }
                 showLog("Exiting sendTextBtn");
+            }
+        });
+
+        bluetoothsend.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                MainActivity.printMessage(GridMap.message);
+                Toast.makeText(getActivity(), GridMap.message, Toast.LENGTH_LONG).show();
             }
         });
 
