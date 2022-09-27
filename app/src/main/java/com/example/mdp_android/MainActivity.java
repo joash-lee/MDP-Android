@@ -355,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
                             obsDirectionCoordDetails[3]="1";
                             gridMap.updateObstacleDirectionCoord(tempObsDirectionCoord);
                             Toast.makeText(MainActivity.this, "FOUND Obs Image!", Toast.LENGTH_LONG).show();
+                            robotStatusTextView.setText("Obstacle Found");
                         }
                         else
                         {
@@ -389,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
                 int[] currCood = gridMap.getCurCoord();
                 gridMap.setOldRobotCoord(currCood[0],currCood[1]);
                 gridMap.setCurCoord(Integer.parseInt(xyd[0]),Integer.parseInt(xyd[1]),xyd[2]);
-                //wait(1500);
+                wait(1500);
             }
             }catch (Exception e) {
                 showLog("messageReceiver: try decode unsuccessful");
