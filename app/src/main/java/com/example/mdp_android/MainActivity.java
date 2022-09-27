@@ -275,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 if (message.substring(0,6).equals("STATUS")){
                     String[]statusMessage= message.split(":");
                     robotStatusTextView.setText(statusMessage[1]);
+                    wait(5000);
                 }
             } catch (Exception e) {
                 showLog("Adding Image Failed");
