@@ -131,6 +131,18 @@ public class MainActivity extends AppCompatActivity {
 
     public static TextView getRobotStatusTextView() {  return robotStatusTextView; }
 
+    private static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     public static void sharedPreferences() {
         sharedPreferences = MainActivity.getSharedPreferences(MainActivity.context);
         editor = sharedPreferences.edit();
@@ -315,11 +327,11 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 showLog("Adding Image Failed");
             }
-            try {
+    /*        try {
                 if (message.substring(0,5).equals("IMAGE")) {//IMAGE X,Y,ObstacleID.
                     String[]coorDist = message.split(" ");
                     String[]xyd = coorDist[1].split(",");
-                    /*changeTextView("Ready");*/
+                    /*changeTextView("Ready");
                     Log.d(TAG, "onReceive: x: " + xyd[0] + " y: " + xyd[1] +" img Id: " +xyd[2]);
                     gridMap.drawImageNumberCell(Integer.parseInt(xyd[0]),Integer.parseInt(xyd[1]),Integer.parseInt(xyd[2]));
                     Log.d(TAG, "onReceive: image added to x: " + xyd[0] + " y: " + xyd[1] +" img Id: " +xyd[2]);
@@ -327,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
                        else found then upon algo get segment it will be less by 1 when a obstacle is found.
                        Then check if obstacleDirectionCoord is updated accordingly to its found bit [3] when
                        an obstacle is found.
-                    */
+
                     //even tho say IMAGE 19,0,08 shld be the btm right hand side of grid,
                     // obsDirectionCoordDetails(x,y,direction,foundbit) as 20,1,0,0. x = 20 y = 1. Need to -1 when comparing
                     ArrayList<String[]> tempObsDirectionCoord = gridMap.getObstacleDirectionCoord();
@@ -363,6 +375,8 @@ public class MainActivity extends AppCompatActivity {
                     showLog("messageReceiver: try decode unsuccessful");
                 }
             }
+*/
+
             //String chkRecievedText = sharedPreferences.getString("message", "") + message;
             try{
             if(message.substring(0,5).equals("ROBOT"))
@@ -375,13 +389,15 @@ public class MainActivity extends AppCompatActivity {
                 int[] currCood = gridMap.getCurCoord();
                 gridMap.setOldRobotCoord(currCood[0],currCood[1]);
                 gridMap.setCurCoord(Integer.parseInt(xyd[0]),Integer.parseInt(xyd[1]),xyd[2]);
+                wait(1500);
             }
             }catch (Exception e) {
                 showLog("messageReceiver: try decode unsuccessful");
             }
-            //Function to read capture image from rpi
+
+            //Function to read capture image from rpi (Updated Candy)
             try {
-                if (message.substring(0,3).equals("CAM")) {//IMAGE X,Y,ObstacleID.
+                if (message.substring(0,3).equals("CAM")) {//CAM_X_Y_ObstacleID.
                     String[]coorDist = message.split("_");
                     //String[]xyd = coorDist[1].split(",");
                     /*changeTextView("Ready");*/
