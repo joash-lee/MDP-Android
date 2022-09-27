@@ -145,6 +145,8 @@ public class Map{
 					setGrid(i, j, Constant.POSSIBLEGRIDLABELS[5]);
 					setDist(i, j, 0);
 				}
+
+
 				// Set the remaining grids unexplored
 				// Set dist to 999999 to ensure all values will be overridden
 				else {

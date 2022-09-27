@@ -813,6 +813,7 @@ public class GridMap extends View {
         showLog("Exiting resetMap");
         this.invalidate();
     }
+
     public void moveRobot(String direction) {
         showLog("Entering moveRobot");
         setValidPosition(false);

@@ -379,6 +379,45 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e) {
                 showLog("messageReceiver: try decode unsuccessful");
             }
+            //Function to read capture image from rpi
+            try {
+                if (message.substring(0,3).equals("CAM")) {//IMAGE X,Y,ObstacleID.
+                    String[]coorDist = message.split("_");
+                    //String[]xyd = coorDist[1].split(",");
+                    /*changeTextView("Ready");*/
+                    Log.d(TAG, "onReceive: x: " + coorDist[1] + " y: " + coorDist[2] +" img Id: " +coorDist[3]);
+                    gridMap.drawImageNumberCell(Integer.parseInt(coorDist[1]),Integer.parseInt(coorDist[2]),Integer.parseInt(coorDist[3]));
+                    Log.d(TAG, "onReceive: image added to x: " + coorDist[1] + " y: " + coorDist[2] +" img Id: " +coorDist[3]);
+                    /*TODO check if on image,x,y,31 that it will stay as not found,
+                       else found then upon algo get segment it will be less by 1 when a obstacle is found.
+                       Then check if obstacleDirectionCoord is updated accordingly to its found bit [3] when
+                       an obstacle is found.
+                    */
+                    //even tho say IMAGE 19,0,08 shld be the btm right hand side of grid,
+                    // obsDirectionCoordDetails(x,y,direction,foundbit) as 20,1,0,0. x = 20 y = 1. Need to -1 when comparing
+                    ArrayList<String[]> tempObsDirectionCoord = gridMap.getObstacleDirectionCoord();
+                    for (String[] obsDirectionCoordDetails :tempObsDirectionCoord) {
+                        Log.d(TAG, "onReceive: image added to x: " + obsDirectionCoordDetails[0] + " y: " + obsDirectionCoordDetails[1] + "Direction" +obsDirectionCoordDetails[2] + "found bit" + obsDirectionCoordDetails[3]);
+                        if ((Integer.parseInt(obsDirectionCoordDetails[0])-1)==Integer.parseInt(coorDist[1]) &&
+                                (Integer.parseInt(obsDirectionCoordDetails[1])-1)==Integer.parseInt(coorDist[2]) &&
+                                Integer.parseInt(coorDist[3])<31)//y,x
+                        {//IMAGE x,y,direction if else method here will be mainly be used for manual since no IR sensor to detect.
+
+                            obsDirectionCoordDetails[3]="1";
+                            gridMap.updateObstacleDirectionCoord(tempObsDirectionCoord);
+                            Toast.makeText(MainActivity.this, "FOUND Obs Image!", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this, "Bulleye detected!", Toast.LENGTH_LONG).show();
+                        }
+                        Log.d(TAG, "onReceive: image added to x: " + obsDirectionCoordDetails[1] + " y: " + obsDirectionCoordDetails[0] +" Direction: " +obsDirectionCoordDetails[2] + "found bit" + obsDirectionCoordDetails[3]);
+                        //MainActivity.printMessage("onReceive: image added to x: " + obsDirectionCoordDetails[1] + " y: " + obsDirectionCoordDetails[0] +" img Id: " +obsDirectionCoordDetails[2] + "found bit" + obsDirectionCoordDetails[3]);
+                    }
+                }
+            } catch (Exception e) {
+                showLog("Adding Image Failed");
+            }
             sharedPreferences();
 
             String receivedText = sharedPreferences.getString("message", "") + "\n" + message;
