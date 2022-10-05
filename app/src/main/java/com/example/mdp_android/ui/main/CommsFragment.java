@@ -102,7 +102,7 @@ public class CommsFragment extends Fragment {
         bluetoothsend.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                MainActivity.printMessage(GridMap.message);
+                MainActivity.printMessage("AG "+GridMap.message);
                 Toast.makeText(getActivity(), GridMap.message, Toast.LENGTH_LONG).show();
             }
         });

@@ -275,7 +275,6 @@ public class MainActivity extends AppCompatActivity {
                 if (message.substring(0,6).equals("STATUS")){
                     String[]statusMessage= message.split(":");
                     robotStatusTextView.setText(statusMessage[1]);
-                    wait(5000);
                 }
             } catch (Exception e) {
                 showLog("Adding Image Failed");
@@ -355,11 +354,11 @@ public class MainActivity extends AppCompatActivity {
                             obsDirectionCoordDetails[3]="1";
                             gridMap.updateObstacleDirectionCoord(tempObsDirectionCoord);
                             Toast.makeText(MainActivity.this, "FOUND Obs Image!", Toast.LENGTH_LONG).show();
-                            robotStatusTextView.setText("Obstacle Found");
+                            robotStatusTextView.setText("Obstacle "+xyd[2].toString()+" Found!");
                         }
                         else
                         {
-                            Toast.makeText(MainActivity.this, "Bulleye detected!", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(MainActivity.this, "Bulleye detected!", Toast.LENGTH_LONG).show();
                         }
                         Log.d(TAG, "onReceive: image added to x: " + obsDirectionCoordDetails[1] + " y: " + obsDirectionCoordDetails[0] +" Direction: " +obsDirectionCoordDetails[2] + "found bit" + obsDirectionCoordDetails[3]);
                         //MainActivity.printMessage("onReceive: image added to x: " + obsDirectionCoordDetails[1] + " y: " + obsDirectionCoordDetails[0] +" img Id: " +obsDirectionCoordDetails[2] + "found bit" + obsDirectionCoordDetails[3]);
@@ -390,9 +389,16 @@ public class MainActivity extends AppCompatActivity {
                 int[] currCood = gridMap.getCurCoord();
                 gridMap.setOldRobotCoord(currCood[0],currCood[1]);
                 gridMap.setCurCoord(Integer.parseInt(xyd[0]),Integer.parseInt(xyd[1]),xyd[2]);
-                wait(1500);
+
             }
             }catch (Exception e) {
+                showLog("messageReceiver: try decode unsuccessful");
+            }
+            try{
+                if(message.substring(0,4).equals("STOP")){
+                    robotStatusTextView.setText("Exploration Complete");
+                }
+            }catch(Exception e){
                 showLog("messageReceiver: try decode unsuccessful");
             }
             sharedPreferences();

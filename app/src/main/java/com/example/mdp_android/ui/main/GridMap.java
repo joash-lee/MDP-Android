@@ -1217,7 +1217,7 @@ public class GridMap extends View {
                 foundbit = "Found";
             }
 
-            message = message + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0].trim()) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1].trim()) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2].trim()) +")";
+            message = message + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0].trim()) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1].trim()) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2].trim()) +");";
             Toast.makeText(getContext().getApplicationContext(),message,Toast.LENGTH_LONG);
             //MainActivity.printMessage("obstacle" + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0]) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1]) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2]) + " "+foundbit+")");
             this.printObstacleAdded=false;
