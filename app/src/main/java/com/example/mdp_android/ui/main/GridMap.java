@@ -775,6 +775,7 @@ public class GridMap extends View {
 
     public void resetMap() {
         showLog("Entering resetMap");
+        message="";
         TextView robotStatusTextView =  ((Activity)this.getContext()).findViewById(R.id.robotStatusTextView);
         Switch manualAutoToggleBtn = ((Activity)this.getContext()).findViewById(R.id.manualAutoToggleBtn);
         obstacleCount =0;
