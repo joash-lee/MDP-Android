@@ -119,9 +119,6 @@ public class CommsFragment extends Fragment {
         bluetoothsend.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //Thread t = new Thread(timerRunnableFastest2);
-                //t.start();
-                //fastestTimer = System.currentTimeMillis();
                 MainActivity.printMessage("ST "+GridMap.message);
                 Toast.makeText(getActivity(), GridMap.message, Toast.LENGTH_LONG).show();
 

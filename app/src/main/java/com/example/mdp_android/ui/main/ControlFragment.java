@@ -6,7 +6,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,18 +30,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mdp_android.MainActivity;
 import com.example.mdp_android.R;
-//import com.example.mdp_android.algo.Algo;
 
 import static android.content.Context.SENSOR_SERVICE;
 
 public class ControlFragment extends Fragment implements SensorEventListener {
-    // Init
+
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG = "ControlFragment";
     private PageViewModel pageViewModel;
-    private static runAlgoCommandsAsync algoAsyncCommand;
-    // Declaration Variable
-    // Shared Preferences
+
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -52,7 +48,7 @@ public class ControlFragment extends Fragment implements SensorEventListener {
             resetexplorebtn, resetfastestbtn;
     private static long exploreTimer, fastestTimer;
     ToggleButton explorebtn, fastestbtn;
-    TextView robotStatustv, tvSbDistance, txtViewRBRotation;
+    TextView robotStatustv, tvSbDistance;
     private static TextView exploreTimetv, fastestTimetv;
     Switch phoneTiltSwitch;
     SeekBar sbDistance;
@@ -60,7 +56,6 @@ public class ControlFragment extends Fragment implements SensorEventListener {
 
     SeekBar sbRotation;
 
-    static Button calibrateButton;
     private static GridMap gridMap;
 
     private Sensor eSensor;
@@ -157,11 +152,8 @@ public class ControlFragment extends Fragment implements SensorEventListener {
         resetexplorebtn = root.findViewById(R.id.exploreResetImageBtn);
         resetfastestbtn = root.findViewById(R.id.fastestResetImageBtn);
         phoneTiltSwitch = root.findViewById(R.id.phoneTiltSwitch);
-        calibrateButton = root.findViewById(R.id.calibrateButton);
         tvSbDistance = root.findViewById(R.id.txtViewSbDistance);
         sbDistance = root.findViewById(R.id.sbDistance);//seekbar is the slider
-        //txtViewRBRotation = root.findViewById(R.id.txtViewRBRotation);
-        //radioRotationGrp = root.findViewById(R.id.radioGrpRotation);
         takePicBtn = root.findViewById(R.id.takePic);
         sbRotation = root.findViewById(R.id.sbRotation);
         tvSbRotation = root.findViewById(R.id.tvRotation);
@@ -440,8 +432,6 @@ public class ControlFragment extends Fragment implements SensorEventListener {
                     updateStatus("movement stop");//turn right
 
                     MainActivity.printMessage("STOP|");
-                    if(algoAsyncCommand!=null)
-                        algoAsyncCommand.cancel(true);
               // }
                 //else
                     //updateStatus("Please press 'STARTING POINT'");
@@ -597,25 +587,9 @@ public class ControlFragment extends Fragment implements SensorEventListener {
                     updateStatus("Please press 'STARTING POINT'");
                     phoneTiltSwitch.setChecked(false);
                 }
-                /*if(phoneTiltSwitch.isChecked()){
-                    compoundButton.setText("TILT ON");
-                }else
-                {
-                    compoundButton.setText("TILT OFF");
-                }*/
             }
         });
 
-        calibrateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLog("Clicked Calibrate Button");
-                //MainActivity.printMessage("SS|");
-                MainActivity.printMessage("UPDATEPOSITION|");
-                MapTabFragment.manualUpdateRequest = true;
-                showLog("Exiting Calibrate Button");
-            }
-        });
 
         return root;
     }
@@ -747,217 +721,4 @@ public class ControlFragment extends Fragment implements SensorEventListener {
         toast.show();
     }
 
-    public static Button getCalibrateButton() {
-        return calibrateButton;
-    }
-
-    public static void runAlgoCommands(Context context)
-    {
-
-        algoAsyncCommand = new runAlgoCommandsAsync(context);
-        algoAsyncCommand.execute();
-
-
-    }
-    public static class runAlgoCommandsAsync extends AsyncTask<Context, Void, Boolean> {
-
-        Context context;
-        public runAlgoCommandsAsync(Context context)
-        {
-            this.context = context;
-        }
-        @Override
-        protected Boolean doInBackground(Context... contexts) {
-            if(gridMap.getCanDrawRobot())
-            {
-                //Exploration timer reset time.
-
-             //       timerHandler.removeCallbacks(timerRunnableExplore);
-
-                //Start exploration time
-                exploreTimer = System.currentTimeMillis();
-                timerHandler.postDelayed(timerRunnableExplore, 0);
-                //fetch algo per obstacle in my obstacle that has not been found
-                //Algo algo = new Algo(gridMap.getCurCoord(),gridMap.getRobotDirection(),gridMap.getObstacleDirectionCoord());
-
-                //for 0 to 4 get
-                //ArrayList<String> algoMoveset =  algo.getPath(4);
-
-                //long string to send to RPI
-                String sendToRPICommands ="";
-                String[] segmentCommand = new String[] { "FORWARD|20cm", "BACK|10cm",
-                        "RFORWARD|90", "RBACK|90",
-                        "LFORWARD|90", "LBACK|90"};
-                /*TODO 1) foreach obstacle that is not found yet, retrieve from algo object then run the instruction.
-                TODO 2) upon STOPBTNIMAGE is working, find out how to stop at a instruction and keep it. Then request from algo obj for new commands.
-                TODO 3) For automated, once TAKEPIC| occurs, will have to get by algo segment's last movement direction.
-                 check with algo if they can just append the x,y (Algo will provide method to get current seg obstacle's xy
-                  of the particular obstacle into the obstacle segment
-                 then android can just use the x,y to match the obstacle and tag its relevant foundbit to 1
-                 TODO 4) AFTER end of obstacle loop, send to RPI GG| to indicate all segments done then stop.*/
-                String[] splitCommand;
-                String moveDirection;
-                String distance;
-                String rotation;
-                for (String command:segmentCommand) {
-                    //we split the command here
-                    //if contains cm means its straightline else rotation 90 LR F/B
-                    if (isCancelled())
-                        break;
-                    splitCommand = command.split("\\|");
-                    moveDirection=splitCommand[0];//takes out anything infront of |
-                /*try {//testing for entire string command to send.
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
-                    sendToRPICommands += command +",";
-                    if(splitCommand[1].contains("cm"))
-                    {gridMap.setRotationstatus(false);
-                        distance=splitCommand[1].substring( 0, splitCommand[1].indexOf("cm"));
-                        gridMap.updateSbDistance((Integer.valueOf(distance)/10));
-                        switch (moveDirection)//can only be FORWARD / BACK for straightline
-                        {
-                            case "FORWARD":
-                                //move robot forward by distance
-                                //converting distance to sdDistance
-                                if (gridMap.getCanDrawRobot()) {
-                                    gridMap.moveRobot("forward");
-                                    MainActivity.refreshLabel();}
-                                Log.d(TAG, "runAlgoCommands: move forward by " + distance);
-                                break;
-                            case "BACK":
-                                //move robot backward
-                                if (gridMap.getCanDrawRobot()) {
-                                    gridMap.moveRobot("back");
-                                    MainActivity.refreshLabel();}
-                                Log.d(TAG, "runAlgoCommands: move forward by " + distance);
-                                break;
-                        }
-
-                    }
-                    else
-                    {
-                        rotation = splitCommand[1];
-                        switch (moveDirection)
-                        {
-                            case "LFORWARD":
-                                //move robot LFORWARD 90 degree
-                                gridMap.updaterotationid(1);
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("forward");
-                                //updateStatus("moving forward",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.moveRobot("left");
-                                //updateStatus("turning left",context);//turn left
-                                MainActivity.refreshLabel();
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("forward");
-                                //updateStatus("moving forward",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.updateRotationDirection(true);
-                                Log.d(TAG, "runAlgoCommands: move lforward by " + rotation);
-
-                                break;
-                            case "RFORWARD":
-                                //move robot RFORWARD 90 degree
-                                gridMap.updaterotationid(1);
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("forward");
-                                //updateStatus("moving forward",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.moveRobot("right");
-                                //updateStatus("turning right",context);//turn right
-                                MainActivity.refreshLabel();
-
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("forward");
-                                //updateStatus("moving forward",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.updateRotationDirection(true);
-                                Log.d(TAG, "runAlgoCommands: move rforward by " + rotation);
-
-                                break;
-                            case "LBACK":
-                                //move robot LBACK 90 degree
-                                gridMap.updaterotationid(1);
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("back");
-                                //updateStatus("moving back",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.moveRobot("right");
-                                //updateStatus("turning left",context);//turn left, by steering right, coz reverse
-                                MainActivity.refreshLabel();
-
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("back");
-                                //updateStatus("moving back",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.updateRotationDirection(true);
-                                Log.d(TAG, "runAlgoCommands: move rforward by " + rotation);
-                                break;
-                            case "RBACK":
-                                //move robot RBACK 90 degree
-                                gridMap.updaterotationid(1);
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("back");
-                                //updateStatus("moving back",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.moveRobot("left");
-                                //updateStatus("turning right",context);//turn right
-                                MainActivity.refreshLabel();
-
-                                gridMap.setRotationstatus(true);
-                                gridMap.moveRobot("back");
-                                //updateStatus("moving back",context);
-                                MainActivity.refreshLabel();
-
-                                gridMap.updateRotationDirection(true);
-                                Log.d(TAG, "runAlgoCommands: move rforward by " + rotation);
-                                break;
-                        }
-                        gridMap.setRotationstatus(false);
-
-                    }
-                    //then we move our robot, while sending the message to RPI too.
-                    //MainActivity.printMessage(command);
-                    //trying out to send the whole string.
-                }
-                MainActivity.printMessage(sendToRPICommands+"TAKEPIC|");
-                /*once take pic is done, use getSegmentObstacle(segementID) -> returns x,y as int[].
-                Update our obstacleDirectionCoord[3]*/
-
-                //this is suppose to after all the segements done.
-                MainActivity.printMessage("GG|");
-                //Do explore time stop
-            }
-            else
-                return false;//else means no robot added
-            return true;//true means successfully done
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // set up values for required params
-
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            if(aBoolean==false)
-                updateStatus("Please add robot to map.",context);
-
-        }
-
-
-    }
 }

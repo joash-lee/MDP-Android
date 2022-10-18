@@ -38,13 +38,6 @@ public class Userinput extends Activity{
             public void onClick(View view) {
                 mEdit   = (EditText)findViewById(R.id.editText1);
                 mText = (TextView)findViewById(R.id.textView1);
-                //mText.setText("Welcome "+mEdit.getText().toString()+"!");
-
-
-                //aList.add("N");
-                //aList.add("S");
-                //aList.add("E");
-                //aList.add("W");
                 aList.add(mEdit.getText().toString().trim());
 
                 System.out.println("Integer Number Added in ArrayList= " + aList);

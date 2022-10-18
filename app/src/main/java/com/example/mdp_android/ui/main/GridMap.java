@@ -35,10 +35,6 @@ import java.util.List;
 
 public class GridMap extends View {
 
-    private static Userinput userinput;
-    private static String Direction;
-    private static int rid;
-    private static int Directioncount;
     public static String message = "";
 
 
@@ -64,7 +60,6 @@ public class GridMap extends View {
     private Paint fastestPathColor = new Paint();
 
     private static JSONObject receivedJsonObject = new JSONObject();
-    private static JSONObject mapInformation;
     private static JSONObject backupMapInformation;
     private static String robotDirection = "None";
     private static int[] startCoord = new int[]{-1, -1};
@@ -99,14 +94,9 @@ public class GridMap extends View {
 
 
 
-
-    //will be updated from controlfragment's seekbar value' count sbDistanceCount. when algo uses, can directly update via a updateSbDistance method.
-    //sbDistance is used to calculate and map the canvas accordigly to the 10cm grid squares. See moveRobot() method
     private int sbDistance = 0;
     private int rotationid = 0;
 
-    // rotationValue will be updated from controlfragment' radio button checked value rotationCount, placed here in case for further need to use this value.
-    // rotationValue and leftRotateElseRight will be used to update android's robot direction on the grid accordingly to the rotation.
     private boolean leftRotateElseRight = false;
     private int rotationValue = 0;
 
@@ -480,7 +470,7 @@ public class GridMap extends View {
         return waypointCoord;
     }
 
-    private void setObstacleCoord(int col, int row) { //c5 - c7 set obstacle with face. Require adding of face indicator
+    private void setObstacleCoord(int col, int row) {
         showLog("Entering setObstacleCoord");
         int[] obstacleCoord = new int[]{col, row};
         GridMap.obstacleCoord.add(obstacleCoord);
@@ -594,7 +584,6 @@ public class GridMap extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         showLog("Entering onTouchEvent");
-        boolean obsMoved = false;
         int obstacleInArray = -1;
         if (event.getAction() == MotionEvent.ACTION_DOWN && this.getAutoUpdate() == false) {
             int column = (int) (event.getX() / cellSize);
@@ -644,18 +633,10 @@ public class GridMap extends View {
             if (obstacleDirectionCoordinateStatus) {
                 obstacleInArray = isValidObstacleCoord(column,row);
                 if(obstacleCount < maxObstacles){
-                    //have a obstacle count ++ max to 5
-
-                    /*set obstacle to move upon tap down and is obstacle
-                    then upon action up set the obstacle*/
-                    //if current x,y is obstacle then set ismove flag to true
 
                     if( obstacleInArray == -1) //-1 means valid obs coord
                     {
-                        //if is valid then we add
-                        //have a obstacle direction
                         this.printObstacleAdded=true;
-                        //sets obstacle upon tap.-----Start-----
                         this.setObstacleCoord(column, row);
                         obstacleCount++;
                         setObstacleDirectionCoordinate(column,row,obstacleDirection);
@@ -665,7 +646,6 @@ public class GridMap extends View {
                         this.invalidate();
 
                         return true;
-                        //sets obstacle upon tap.-------End-----
                     }
                 }
                 else{//max obstacles
@@ -777,24 +757,14 @@ public class GridMap extends View {
         showLog("Entering resetMap");
         message="";
         TextView robotStatusTextView =  ((Activity)this.getContext()).findViewById(R.id.robotStatusTextView);
-        Switch manualAutoToggleBtn = ((Activity)this.getContext()).findViewById(R.id.manualAutoToggleBtn);
         obstacleCount =0;
-        //Switch phoneTiltSwitch = ((Activity)this.getContext()).findViewById(R.id.phoneTiltSwitch);
         updateRobotAxis(1, 1, "None");
         robotStatusTextView.setText("Not Available");
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
 
-        if (manualAutoToggleBtn.isChecked()) {
-            manualAutoToggleBtn.toggle();
-            manualAutoToggleBtn.setText("MANUAL");
-        }
         this.toggleCheckedBtn("None");
 
-        /*if (phoneTiltSwitch.isChecked()) {
-            phoneTiltSwitch.toggle();
-            phoneTiltSwitch.setText("TILT OFF");
-        }*/
 
         receivedJsonObject = null;
         backupMapInformation = null;
@@ -1014,43 +984,41 @@ public class GridMap extends View {
                 robotDirection = "error moveCurCoord";
                 break;
         }
-        if (getValidPosition()) {//this method here is to check if there are obstacles blocking the path if not, it will move robot.
-            int startX;//this works for forward and backword of direction N. error for backward of N because startpoint highest is 18 not 19
-            int startY; //need to fix the setting of Y coordinates to proper 19 not 18, while the row ' X coordinates are proper @ 2 meaning index 1 of array. e.g. [2,18] shld be [2,19]
+        if (getValidPosition()) {
+            int startX;
+            int startY;
             int endX;
             int endY;
-            if(tempCoordX-oldCoord[0]==0) {//no changes only Y axis movement
+            if(tempCoordX-oldCoord[0]==0) {
                 startX = tempCoordX;
                 endX = tempCoordX;
             }
-            if(tempCoordX-oldCoord[0]>0){//+ve changes in X axis
-                //then we do start x = old, end x = tempCoordX
+            if(tempCoordX-oldCoord[0]>0){
                 startX=oldCoord[0];
                 endX=tempCoordX;
             }
-            else//-ve changes in X axis, so since we using ++ for loops, we change start x to the loweer number, aka tempCoordX.
+            else
             {
                 startX=tempCoordX;
                 endX=oldCoord[0];
             }
 
-            if(tempCoordY-oldCoord[1]==0) {//no changes only, x axis movement
+            if(tempCoordY-oldCoord[1]==0) {
                 startY = tempCoordY;
                 endY = tempCoordY;
             }
-            if(tempCoordY-oldCoord[1]>0){//+ve changes in y axis
-                //then we do start y = old, end y = tempCoordy
+            if(tempCoordY-oldCoord[1]>0){
                 startY=oldCoord[1];
                 endY=tempCoordY;
             }
-            else//-ve changes in Y Axis.
+            else
             {
                 startY=tempCoordY;
                 endY=oldCoord[1];
             }
 
 
-            for (int x = startX - 1; x <= endX + 1; x++) {//working for Direction N forward and backward to detect obstacle
+            for (int x = startX - 1; x <= endX + 1; x++) {
                 for (int y = startY - 1; y <= endY + 1; y++) {
                     for (int i = 0; i < obstacleCoord.size(); i++) {
                         if (obstacleCoord.get(i)[0] != x || obstacleCoord.get(i)[1] != y)
@@ -1078,7 +1046,7 @@ public class GridMap extends View {
                 movementX =GX/10;
             if (tempCoordY - oldCoord[1] > 0) {
             for(int i = 0;i<movementY;i++)//currently this method works to set explored cells, but it will override obstacle cells.
-                {//thus the at the end of moveRobot there is a valid thingy that check obstacle, maybe I can shift it forward to check b4 setting exploration.
+                {
                     curCoord[1] += 1;//movement of grid by 10cm
                     this.setOldRobotCoord(curCoord[0],curCoord[1]);
                 }
@@ -1093,7 +1061,7 @@ public class GridMap extends View {
             }
             if (tempCoordX - oldCoord[0] > 0) {//+ve x
             for(int i = 0;i< movementX;i++)//currently this method works to set explored cells, but it will override obstacle cells.
-                {//thus the at the end of moveRobot there is a valid thingy that check obstacle, maybe I can shift it forward to check b4 setting exploration.
+                {
                     curCoord[0] += 1;//movement of grid by 10cm
                     this.setOldRobotCoord(curCoord[0],curCoord[1]);
                 }
@@ -1160,8 +1128,6 @@ public class GridMap extends View {
     }
     private void setObstacleDirectionCoordinate(int col, int row,String obstacleDirection) {
         showLog("Entering setDirectionCoord");
-        /*int[] obstacleCoord = new int[]{col, row};
-        this.getObstacleCoord().add(obstacleCoord);*/
         String[] directionCoord = new String[4];
         directionCoord[0] = String.valueOf(col);
         directionCoord[1] = String.valueOf(row);
@@ -1220,7 +1186,6 @@ public class GridMap extends View {
 
             message = message + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0].trim()) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1].trim()) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2].trim()) +");";
             Toast.makeText(getContext().getApplicationContext(),message,Toast.LENGTH_LONG);
-            //MainActivity.printMessage("obstacle" + "(" + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[0]) - 1) + "," + (Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[1]) - 1) + "," + Integer.parseInt(obstacleDirectionCoord.get(arrayIndex)[2]) + " "+foundbit+")");
             this.printObstacleAdded=false;
         }
     }

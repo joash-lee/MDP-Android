@@ -9,28 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Switch
-            android:id="@+id/manualAutoToggleBtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:paddingRight="150dp"
-            android:switchPadding="-220dp"
-            android:text="MANUAL"
-            android:textAlignment="center"
-            android:textOff="@string/manual"
-            android:textOn="@string/auto"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.54"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
         <ImageButton
         android:id="@+id/exploredImageBtn"
         android:layout_width="45dp"

@@ -1,6 +1,5 @@
 package com.example.mdp_android.ui.main;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.mdp_android.MainActivity;
 import com.example.mdp_android.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MapTabFragment extends Fragment {
@@ -33,7 +31,6 @@ public class MapTabFragment extends Fragment {
     ImageButton directionChangeImageBtn, exploredImageBtn, obstacleImageBtn, clearImageBtn,
     northFaceObsBtn, eastFaceObsBtn, westFaceObsBtn,southFaceObsBtn;
     ToggleButton setStartPointToggleBtn, setWaypointToggleBtn;
-    Switch manualAutoToggleBtn;
     GridMap gridMap;
     private static boolean autoUpdate = false;
     public static boolean manualUpdateRequest = false;
@@ -78,7 +75,6 @@ public class MapTabFragment extends Fragment {
         westFaceObsBtn = root.findViewById(R.id.westFaceObs);
         southFaceObsBtn = root.findViewById(R.id.southFaceObs);
         clearImageBtn = root.findViewById(R.id.clearImageBtn);
-        manualAutoToggleBtn = root.findViewById(R.id.manualAutoToggleBtn);
         updatebtn = root.findViewById(R.id.updateButton);
 
         resetMapbtn.setOnClickListener(new View.OnClickListener() {
@@ -222,45 +218,6 @@ public class MapTabFragment extends Fragment {
             }
         });
 
-        manualAutoToggleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLog("Clicked manualAutoToggleBtn");
-                if (manualAutoToggleBtn.getText().equals("MANUAL")) {
-                    try {
-                        gridMap.setAutoUpdate(true);
-                        autoUpdate = true;
-                        gridMap.toggleCheckedBtn("None");
-                        updatebtn.setClickable(false);
-                        updatebtn.setTextColor(Color.GRAY);
-                        //ControlFragment.getCalibrateButton().setClickable(false);
-                        //ControlFragment.getCalibrateButton().setTextColor(Color.GRAY);
-                        ControlFragment.runAlgoCommands(getContext());
-                        manualAutoToggleBtn.setText("AUTO");//auto means use Algo
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    showToast("AUTO mode");
-                }
-                else if (manualAutoToggleBtn.getText().equals("AUTO")) {
-                    try {
-                        gridMap.setAutoUpdate(false);
-                        autoUpdate = false;
-                        gridMap.toggleCheckedBtn("None");
-                        updatebtn.setClickable(true);
-                        updatebtn.setTextColor(Color.BLACK);
-                        //ControlFragment.getCalibrateButton().setClickable(true);
-                        //ControlFragment.getCalibrateButton().setTextColor(Color.BLACK);
-
-                        manualAutoToggleBtn.setText("MANUAL");//manual means pause algo instructions STOP| is send
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    showToast("MANUAL mode");
-                }
-                showLog("Exiting manualAutoToggleBtn");
-            }
-        });
 
 
         updatebtn.setOnClickListener(new View.OnClickListener() {

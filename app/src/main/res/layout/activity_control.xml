@@ -12,22 +12,6 @@
         <!-- make left n right button invis for now-->
 
 
-        <Button
-            android:id="@+id/calibrateButton"
-            android:layout_width="157dp"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="60dp"
-            android:background="@drawable/rounded_corner_palette01"
-            android:clickable="true"
-            android:text="Update Pos"
-            android:textAlignment="center"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.015"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backwardRightImageBtn" />
-
         <Switch
             android:id="@+id/phoneTiltSwitch"
             android:layout_width="wrap_content"
