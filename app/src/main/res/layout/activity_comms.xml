@@ -72,8 +72,10 @@
         android:layout_marginEnd="60dp"
         android:foreground="@drawable/ic_send"
         android:foregroundGravity="center"
+        android:visibility="gone"
         app:backgroundTint="#0288D1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageReceivedTextView"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:layout_constraintTop_toBottomOf="@+id/messageReceivedTextView"
+        tools:visibility="gone"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
