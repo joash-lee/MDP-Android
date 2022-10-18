@@ -3,6 +3,7 @@ package com.example.mdp_android.ui.main;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +30,10 @@ public class CommsFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG = "CommsFragment";
+    private static long fastestTimer;
+    private static TextView fastestTimetv;
 
+    static Handler timerHandler = new Handler();
     private PageViewModel pageViewModel;
 
     // Declaration Variable
@@ -74,7 +78,8 @@ public class CommsFragment extends Fragment {
         messageReceivedtv = (TextView) root.findViewById(R.id.messageReceivedTextView);
         messageReceivedtv.setMovementMethod(new ScrollingMovementMethod());
         typeBoxEditText = (EditText) root.findViewById(R.id.typeBoxEditText);
-
+        fastestTimetv = root.findViewById(R.id.fastestTimeTextView);
+        fastestTimer = 0;
         // get shared preferences
         sharedPreferences = getActivity().getSharedPreferences("Shared Preferences", Context.MODE_PRIVATE);
 
@@ -99,11 +104,27 @@ public class CommsFragment extends Fragment {
             }
         });
 
+
+        Runnable timerRunnableFastest2 = new Runnable() {
+            @Override
+            public void run() {
+                long millisFastest = System.currentTimeMillis() - fastestTimer;
+                int secondsFastest = (int) (millisFastest / 1000);
+                int minutesFastest = secondsFastest / 60;
+                secondsFastest = secondsFastest % 60;
+                fastestTimetv.setText(String.format("%02d:%02d", minutesFastest, secondsFastest));
+                timerHandler.postDelayed(this, 500);
+            }
+        };
         bluetoothsend.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                MainActivity.printMessage("AG "+GridMap.message);
+                //Thread t = new Thread(timerRunnableFastest2);
+                //t.start();
+                //fastestTimer = System.currentTimeMillis();
+                MainActivity.printMessage("ST "+GridMap.message);
                 Toast.makeText(getActivity(), GridMap.message, Toast.LENGTH_LONG).show();
+
             }
         });
 

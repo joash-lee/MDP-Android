@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
     private static Context context;
+
+
 
     private static GridMap gridMap;
     static TextView xAxisTextView, yAxisTextView, directionAxisTextView;
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         // Initialization
         super.onCreate(savedInstanceState);
@@ -408,9 +415,34 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("message", receivedText);
             editor.commit();
             refreshMessageReceived();
+
         }
     };
+    private void reduceChoreographerSkippedFramesWarningThreshold() {
 
+        if (BuildConfig.DEBUG) {
+
+            Field field = null;
+
+            try {
+
+                field = Choreographer.class.getDeclaredField("SKIPPED_FRAME_WARNING_LIMIT");
+
+                field.setAccessible(true);
+
+                field.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+                field.set(null, 5);
+
+            } catch (Throwable e) {
+
+                Log.e(TAG, "failed to change choreographer's skipped frames threshold");
+
+            }
+
+        }
+
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
